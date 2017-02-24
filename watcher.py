@@ -4,9 +4,10 @@
 import jodel_api
 import sqlite3
 import requests
-import datetime
-today = datetime.date.today()
-wochentage=["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"]
+import time
+import json
+import sys
+
 conn = sqlite3.connect('db.db')
 c = conn.cursor()
 lat, lng, city = 51.05089, 13.73832, "Dresden"
@@ -32,24 +33,42 @@ c.execute("DELETE FROM accs")
 c.execute("INSERT INTO accs VALUES ('"+str(d['access_token'])+"','"+str(d['expiration_date'])+"','"+str(d['refresh_token'])+"','"+str(d['distinct_id'])+"','"+str(d['device_uid'])+"')")
 #j.refresh_all_tokens()
 #print j.get_posts_recent(skip=None, limit=60, mine=False)
-#j.set_location(lat, lng, city, country=None, name=None) 
-#print j.create_post("Test Jodel - Please Ignore", imgpath=None, color=None)
+j.set_location(lat, lng, city, country=None, name=None) 
+#print j.create_post("If you see this, my API works.", imgpath=None, color=None)
 
 #c.execute('SELECT * FROM accs')
 #print c.fetchone()
 conn.commit()
 conn.close()
+#print j.get_posts_recent(skip=None, limit=60, mine=True)
 
 
 #account is verified and ready.
-#get food!
+#print j.create_post(message="Test-reply #3stundengewartet", imgpath=None, color=None, ancestor="58af6658d24832d276eea172")
+exit
+while (True):
+	post= j.get_post_details("58af6658d24832d276eea172")
+	post=post[1]
+	print (post)
 
-food = requests.get("http://openmensa.org/api/v2/canteens/79/meals")
 
-startJodel="####MENSAJODEL####\n"
-wtag=int(today.strftime('%w'))
-print wtag
-startJodel+=wochentage[wtag]+" - "
-startJodel+=today.strftime('%d.%m')+"\n";
-print startJodel;
+
+	sys.exit()
+
+	# t = open("test.txt","w")
+	# t.truncate()
+	# t.write(json.dumps(post))
+	# t.close()
+	print "got post"
+	for child in post["children"]:
+		print "going through child"
+		m= child["message"].encode("ascii", "ignore")
+		print m
+		if (m.find("Hashtag")!=-1):			
+			print "match"
+
+
+	time.sleep(5)
+
+
 
