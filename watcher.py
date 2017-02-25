@@ -32,9 +32,9 @@ d = j.get_account_data()
 c.execute("DELETE FROM accs")
 c.execute("INSERT INTO accs VALUES ('"+str(d['access_token'])+"','"+str(d['expiration_date'])+"','"+str(d['refresh_token'])+"','"+str(d['distinct_id'])+"','"+str(d['device_uid'])+"')")
 #j.refresh_all_tokens()
-#print j.get_posts_recent(skip=None, limit=60, mine=False)
+#print j.get_posts_recent(skip=None, limit=60, mine=True)
 j.set_location(lat, lng, city, country=None, name=None) 
-#print j.create_post("If you see this, my API works.", imgpath=None, color=None)
+#print j.create_post("ikt sucks \n #1", imgpath=None, color=None)
 
 #c.execute('SELECT * FROM accs')
 #print c.fetchone()
@@ -44,10 +44,10 @@ conn.close()
 
 
 #account is verified and ready.
-#print j.create_post(message="Test-reply #3stundengewartet", imgpath=None, color=None, ancestor="58af6658d24832d276eea172")
-exit
+print j.create_post(message="Test-reply #test", imgpath=None, color=None, ancestor="58b0626e6ef612a4631b938d")
+
 while (True):
-	post= j.get_post_details("58af6658d24832d276eea172")
+	post= j.get_post_details("58b0626e6ef612a4631b938d")
 	post=post[1]
 	print (post)
 
